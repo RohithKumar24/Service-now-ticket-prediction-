@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html >
+<!--From https://codepen.io/frytyler/pen/EGdtg-->
+<head>
+<h1 style = "font-size:40px;" >Predict Resolving and Closing date of a Jira Ticket </h1>
+<style>
+body {
+
+  background: linear-gradient(to top left, #ffffff 39%, #33cccc 100%);
+  background-repeat: no-repeat;
+  background-attachment: fixed;  
+  background-size: cover;
+}
+</style>
+
+</head>
+
+<body>
+
+ <div class="prediction">
+
+     <!-- Main Input For Receiving Query to our ML -->
+    <form action="/predict" method="POST">
+        <label for="Reassignment count" style = "font-size:28px; ">Reassignment count: </label>
+    	<input type="text" name="Reassignment count" placeholder="Reassignment count" style = "font-size:20px;margin-left: 19px;" required="required" />
+        <br> <br>
+        <label for="Reopen count" style = "font-size:28px; ">Reopen count: </label>
+        <input type="text" name="Reopen count" placeholder="Reopen count" style = "font-size:20px; margin-left: 91px;" required="required" />
+		
+        <br> <br>
+        <label for="sys mod count" style = "font-size:28px; ">sys mod count: </label>
+        <input type="text" name="sys mod count" placeholder="sys mod count" style = "font-size:20px; margin-left: 85px;" required="required" />
+		
+		<br> <br>
+		
+		<label for="sla" style = "font-size:28px;">made sla: </label>
+        <select name="sla" id="sla" style = "font-size:20px;  margin-left: 150px;">
+          <option value="True">True</option>
+          <option value="False">False</option>
+        </select>
+        
+        <br> <br> 
+         
+        <label for="knowledge" style = "font-size:28px;">knowledge: </label>
+        <select name="knowledge" id="knowledge" style = "font-size:20px; margin-left: 127px;">
+          <option value="True">True</option>
+          <option value="False">False</option>
+        </select>
+        
+        <br> <br> 
+         
+        <label for="up" style = "font-size:28px;">priority confirmation: </label>
+        <select name="up" id="up" style = "font-size:20px;  margin-left: 15px;">
+          <option value="True">True</option>
+          <option value="False">False</option>
+        </select>
+        
+         <br> <br>
+        <label for="Opened Date" style = "font-size:28px; ">Opened date: </label>
+        <input type="text" name="Opened Date" placeholder="Day/Month/Year Hours:Mins"  required="required" style = "font-size:20px;  margin-left: 110px;"/>
+        
+         <br> <br> 
+        <label for="System Updated Date" style = "font-size:28px;">System Updated date: </label>
+        <input type="text" name="System Updated Date" placeholder="Day/Month/Year Hours:Mins" required="required" style = "font-size:20px;  margin-left: 14px;"/>
+        
+         <br> <br> 
+        <label for="is" style = "font-size:28px;">Incident State: </label>
+        <select name="is" id="is" style = "font-size:20px;  margin-left: 97px;">
+          <option value="Active">Active</option>
+          <option value="New">New</option>
+          <option value="Resolved">Resolved</option>
+          <option value="Closed">Closed</option>
+          <option value="Awaiting User Info">Awaiting User Info</option>
+        </select>
+        
+         <br> <br> 
+         
+        <label for="CI" style = "font-size:28px;">Caller ID: </label>
+        <select name="CI" id="CI" style = "font-size:20px;  margin-left: 147px;">
+          <option value="Caller 1904">Caller 1904</option>
+          <option value="Caller 4514">Caller 4514</option>
+          <option value="Caller 290">Caller 290</option>
+          <option value="Caller 1441">Caller 1441</option>
+          <option value="Caller 93">Caller 93</option>
+          <option value="Caller 4414">Caller 4414</option>
+          <option value="Caller 3763">Caller 3763</option>
+          <option value="Caller 2471">Caller 2471</option>
+          <option value="Caller 3479">Caller 3479</option>
+          <option value="Caller 3160">Caller 3160</option>
+          <option value="Caller 2737">Caller 2737</option>
+          <option value="Caller 298">Caller 298</option>
+          <option value="Caller 1270">Caller 1270</option>
+          <option value="Caller 5093">Caller 5093</option>
+          <option value="Caller 1531">Caller 1531</option>
+        </select>
+
+         <br> <br> 
+        <label for="im" style = "font-size:28px;">Impact: </label>
+        <select name="im" id="im" style = "font-size:20px;  margin-left: 175px;">
+          <option value="Low">Low</option>
+          <option value="Medium">Medium</option>
+          <option value="High">High</option>
+        </select>
+        
+         <br> <br>
+        <label for="pr" style = "font-size:28px;">Priority: </label>
+        <select name="pr" id="pr" style = "font-size:20px;  margin-left: 167px;">
+          <option value="Low">Low</option>
+          <option value="Moderate">Moderate</option>
+          <option value="High">High</option>
+          <option value="Critical">Critical</option>
+        </select>
+        
+         <br> <br> 
+        <label for="cc" style = "font-size:28px;">Closed Code: </label>
+        <select name="cc" id="cc" style = "font-size:20px;  margin-left: 108px;">
+          <option value="code 6">code 6</option>
+          <option value="code 7">code 7</option>
+          <option value="code 9">code 9</option>
+          <option value="code 8">code 8</option>
+          <option value="code 5">code 5</option>
+          <option value="code 1">code 1</option>
+          <option value="code 10">code 10</option>
+          <option value="code 11">code 11</option>
+          <option value="code 16">code 16</option>
+          <option value="code 4">code 4</option>
+        </select>
+        
+		<br> <br> 
+        <button type="submit" class="btn btn-primary btn-block btn-large" style = "font-size:28px;  margin-left: 130px;">Predict</button>
+    </form>
+
+   <br>
+   <br>
+
+ </div>
+
+
+</body>
+</html>
